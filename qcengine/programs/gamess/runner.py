@@ -68,6 +68,22 @@ class GAMESSHarness(ProgramHarness):
 
         return self.version_cache[which_prog]
 
+    def compute_inp(self, input_file=None, output_file="gamess.log") -> str:
+        self.found(raise_error=True)
+
+        if input_file is not None:
+            which_prog = which("rungms")
+            if which_prog not in self.version_cache:
+                print(input_file)
+                input_content = open(input_file,'r')
+                success, dexe = execute([which_prog, input_file], {"gamess.inp": input_content.read()})
+
+            with open(output_file,'w') as file:
+                file.write(dexe["stdout"])
+                file.write(dexe["stderr"])
+
+            return output_file
+
     def compute(self, input_data: AtomicInput, config: "TaskConfig") -> AtomicResult:
         self.found(raise_error=True)
 
