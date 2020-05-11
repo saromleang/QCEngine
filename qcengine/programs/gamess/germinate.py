@@ -14,6 +14,8 @@ def muster_modelchem(method: str, derint: int) -> Dict[str, Any]:
         #'properties': 'prop',
     }[derint]
 
+    print (derint)
+
     opts["contrl__runtyp"] = runtyp
 
     if method == "gamess":
